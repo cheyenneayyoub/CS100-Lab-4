@@ -44,7 +44,9 @@ void Person::printLineage(char dir, int level){
         for(int i = 0; i < numChildren; i++){
             cout << temp << "child: " << children[i]->getName() << endl;
             children[i]->printLineage(dir, level + 1);
-        }
+       	
+	 }
+	delete[] temp;
     } else {
         if(mother){
             cout << temp << "mother: " << mother->getName() << endl;
@@ -54,8 +56,9 @@ void Person::printLineage(char dir, int level){
             cout << temp << "father: " << father->getName() << endl;
             father->printLineage(dir, level + 1);
         }
-    }
 	delete[] temp;
+    }
+//	delete[] temp;
 }
 
 /* helper function to compute the lineage
@@ -63,7 +66,7 @@ void Person::printLineage(char dir, int level){
  * * if level >= 1 then returns ("great ")^(level - 1) + "grand "
  * */
 char* Person::compute_relation(int level){
-    if(level == 0) return ""; 
+    if(level == 0) return strcpy(new char[1], ""); //changed from "" 
 
     char *temp = strcpy(new char[strlen("grand ") + 1], "grand ");
     
@@ -72,6 +75,8 @@ char* Person::compute_relation(int level){
         strcat(strcpy(temp2, "great "), temp);
         delete[] temp;
 	temp = temp2;
+
+
     }
     return temp;
 }
