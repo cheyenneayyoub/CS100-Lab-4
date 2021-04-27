@@ -18,8 +18,6 @@ Person::Person(const char *name_, Person* father_, Person* mother_){
 Person::~Person(){
     delete[] children;
     delete[] name;
-	father = 0; //new
-	mother = 0; //new
 }
 
 void Person::addChild(Person *newChild){
@@ -37,6 +35,7 @@ void Person::printDecendents(){
     printLineage('d', 0);
 }
 
+
 void Person::printLineage(char dir, int level){
     char *temp = compute_relation(level);
 
@@ -44,9 +43,6 @@ void Person::printLineage(char dir, int level){
         for(int i = 0; i < numChildren; i++){
             cout << temp << "child: " << children[i]->getName() << endl;
             children[i]->printLineage(dir, level + 1);
-       	
-	 }
-	delete[] temp;
     } else {
         if(mother){
             cout << temp << "mother: " << mother->getName() << endl;
@@ -56,9 +52,8 @@ void Person::printLineage(char dir, int level){
             cout << temp << "father: " << father->getName() << endl;
             father->printLineage(dir, level + 1);
         }
+        }
 	delete[] temp;
-    }
-//	delete[] temp;
 }
 
 /* helper function to compute the lineage
@@ -75,8 +70,6 @@ char* Person::compute_relation(int level){
         strcat(strcpy(temp2, "great "), temp);
         delete[] temp;
 	temp = temp2;
-
-
     }
     return temp;
 }
