@@ -43,7 +43,6 @@ void Person::printLineage(char dir, int level){
         for(int i = 0; i < numChildren; i++){
             cout << temp << "child: " << children[i]->getName() << endl;
             children[i]->printLineage(dir, level + 1);
- }
     } else {
         if(mother){
             cout << temp << "mother: " << mother->getName() << endl;
@@ -53,16 +52,16 @@ void Person::printLineage(char dir, int level){
             cout << temp << "father: " << father->getName() << endl;
             father->printLineage(dir, level + 1);
         }
-    } 
+        }
 	delete[] temp;
 }
 
 /* helper function to compute the lineage
-* if level = 0 then returns the empty string
-* if level >= 1 then returns ("great ")^(level - 1) + "grand "
-*/
+ * * if level = 0 then returns the empty string
+ * * if level >= 1 then returns ("great ")^(level - 1) + "grand "
+ * */
 char* Person::compute_relation(int level){
-    if(level == 0) return strcpy(new char[1], ""); 
+    if(level == 0) return strcpy(new char[1], ""); //changed from "" 
 
     char *temp = strcpy(new char[strlen("grand ") + 1], "grand ");
     
@@ -76,12 +75,15 @@ char* Person::compute_relation(int level){
 }
 
 /* non-member function which doubles the size of t
- * NOTE: t's type will be a pointer to an array of pointers
- */
+ *  * NOTE: t's type will be a pointer to an array of pointers
+ *   */
 void expand(Person ***t, int *MAX){
   Person **temp = new Person*[2 * *MAX];
   memcpy(temp, *t, *MAX * sizeof(**t));
-  *MAX *= 2;
-  delete[] *t;
+//for(unsigned int i = 0; i < *MAX; ++i){
+//	delete t[i];
+//}//added for loop
+delete[] *t; //moved to before max 
+ *MAX *= 2;
   *t = temp; 
 }
