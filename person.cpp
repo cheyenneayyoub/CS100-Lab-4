@@ -43,7 +43,6 @@ void Person::printLineage(char dir, int level){
             cout << temp << "child: " << children[i]->getName() << endl;
             children[i]->printLineage(dir, level + 1);
  }
-	delete[] temp;
     } else {
         if(mother){
             cout << temp << "mother: " << mother->getName() << endl;
@@ -53,9 +52,8 @@ void Person::printLineage(char dir, int level){
             cout << temp << "father: " << father->getName() << endl;
             father->printLineage(dir, level + 1);
         }
-	delete[] temp;
     } 
-
+	delete[] temp;
 }
 
 /* helper function to compute the lineage
