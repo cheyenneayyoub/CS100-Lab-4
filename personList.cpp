@@ -27,8 +27,8 @@ void PersonList::addPerson(const char* child_name, const char* father_name, cons
                  } else if(!strcmp(theList[i]->getName(), father_name)) {
                               father = theList[i];
                  } else if(!strcmp(theList[i]->getName(), mother_name)){                                      mother = theList[i];
-                                                                                                 }
-                                                                                             }
+                 }
+         }
                                                                                                 
                                                                                           if(father == 0){
                                                                                               // father_name is not in the theList so create a new person
