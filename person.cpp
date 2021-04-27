@@ -6,7 +6,7 @@ using std::cout;
 using std::endl;
 
 Person::Person(const char *name_, Person* father_, Person* mother_){
-    name = new char[strlen(name_)];
+    name = new char[strlen(name_) + 1];
     strcpy(name, name_);
     father = father_;
     mother = mother_;
@@ -16,7 +16,8 @@ Person::Person(const char *name_, Person* father_, Person* mother_){
 }
 
 Person::~Person(){
-    delete children;
+    delete[] children;
+    delete[] name;
 }
 
 void Person::addChild(Person *newChild){
@@ -34,6 +35,7 @@ void Person::printDecendents(){
     printLineage('d', 0);
 }
 
+
 void Person::printLineage(char dir, int level){
     char *temp = compute_relation(level);
 
@@ -41,7 +43,7 @@ void Person::printLineage(char dir, int level){
         for(int i = 0; i < numChildren; i++){
             cout << temp << "child: " << children[i]->getName() << endl;
             children[i]->printLineage(dir, level + 1);
-        }
+ }
     } else {
         if(mother){
             cout << temp << "mother: " << mother->getName() << endl;
@@ -51,7 +53,8 @@ void Person::printLineage(char dir, int level){
             cout << temp << "father: " << father->getName() << endl;
             father->printLineage(dir, level + 1);
         }
-    }
+    } 
+	delete[] temp;
 }
 
 /* helper function to compute the lineage
@@ -59,14 +62,15 @@ void Person::printLineage(char dir, int level){
 * if level >= 1 then returns ("great ")^(level - 1) + "grand "
 */
 char* Person::compute_relation(int level){
-    if(level == 0) return strcpy(new char[1], "");
+    if(level == 0) return strcpy(new char[1], ""); 
 
-    char *temp = strcpy(new char[strlen("grand ") + 1], "grand ");;
+    char *temp = strcpy(new char[strlen("grand ") + 1], "grand ");
     
     for(int i = 2; i <= level; i++){
         char *temp2 = new char[strlen("great ") + strlen(temp) + 1];
         strcat(strcpy(temp2, "great "), temp);
-        temp = temp2;
+        delete[] temp;
+	temp = temp2;
     }
     return temp;
 }
@@ -78,5 +82,6 @@ void expand(Person ***t, int *MAX){
   Person **temp = new Person*[2 * *MAX];
   memcpy(temp, *t, *MAX * sizeof(**t));
   *MAX *= 2;
-  *t = temp;
+  delete[] *t;
+  *t = temp; 
 }
